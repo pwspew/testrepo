@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Portfolio — Untitled</title>
+    <meta name="description" content="A modern developer portfolio." />
+
+    <style>
+        :root{
+            --bg:#071021; --card: rgba(255,255,255,0.06); --muted:#9fb0c8; --accent1:#6ee7b7; --accent2:#7cc2ff;
+            --glass: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+        }
+        *{box-sizing:border-box}
+        html,body{height:100%}
+        body{
+            margin:0; font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+            background: radial-gradient(1200px 600px at 10% 10%, rgba(124,58,237,0.12), transparent),
+                                    radial-gradient(1000px 500px at 90% 90%, rgba(59,130,246,0.09), transparent),
+                                    var(--bg);
+            color:#e6f0fa; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+            padding:32px;
+        }
+
+        .container{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 380px;gap:28px;}
+        header{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;gap:16px}
+        .brand{display:flex;gap:12px;align-items:center}
+        .logo{
+            width:48px;height:48px;border-radius:10px;
+            background:linear-gradient(135deg,var(--accent1),var(--accent2));
+            display:grid;place-items:center;font-weight:700;color:#042;box-shadow:0 6px 30px rgba(2,6,23,0.6);
+        }
+        h1{margin:0;font-size:1.25rem;letter-spacing:-0.2px}
+        p.lead{margin:2px 0 0;color:var(--muted);font-size:0.95rem}
+
+        /* left column */
+        main{background:var(--glass);padding:20px;border-radius:14px;backdrop-filter:blur(6px);box-shadow:0 8px 30px rgba(2,6,23,0.5)}
+        .hero{display:flex;align-items:center;gap:18px}
+        .avatar{
+            width:96px;height:96px;border-radius:14px;background:linear-gradient(160deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+            display:grid;place-items:center;font-weight:700;font-size:28px;color:var(--accent2);
+            border:1px solid rgba(255,255,255,0.04)
+        }
+        .hero h2{margin:0;font-size:1.4rem}
+        .tags{margin-top:10px;display:flex;gap:8px;flex-wrap:wrap}
+        .tag{background:rgba(255,255,255,0.03);padding:6px 10px;border-radius:999px;font-size:0.85rem;color:var(--muted);border:1px solid rgba(255,255,255,0.02)}
+
+        /* projects */
+        .controls{display:flex;justify-content:space-between;align-items:center;margin-top:18px;gap:12px}
+        .search{
+            flex:1;display:flex;gap:8px;align-items:center;background:rgba(0,0,0,0.22);padding:8px;border-radius:10px;
+            border:1px solid rgba(255,255,255,0.03);
+        }
+        .search input{background:transparent;border:0;outline:none;color:inherit;font-size:0.95rem;width:100%}
+        .filters{display:flex;gap:8px}
+        .btn{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:8px 12px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);cursor:pointer;color:var(--muted);font-size:0.9rem}
+        .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:14px}
+        .card{
+            background:var(--card);padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);
+            display:flex;flex-direction:column;gap:8px;cursor:pointer;transition:transform .18s ease, box-shadow .18s ease;
+        }
+        .card:hover{transform:translateY(-6px);box-shadow:0 10px 30px rgba(2,6,23,0.6)}
+        .card .meta{display:flex;justify-content:space-between;align-items:center;font-size:0.85rem;color:var(--muted)}
+        .card h3{margin:0;font-size:1rem}
+        .stack{display:flex;gap:6px;flex-wrap:wrap;font-size:0.78rem;color:var(--muted)}
+
+        /* right column */
+        aside{display:flex;flex-direction:column;gap:12px}
+        .panel{background:var(--glass);padding:16px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
+        .socials{display:flex;gap:8px;flex-wrap:wrap}
+        a.social{display:inline-flex;gap:8px;align-items:center;padding:8px 10px;border-radius:10px;background:rgba(255,255,255,0.02);text-decoration:none;color:var(--muted);font-size:0.95rem}
+
+        footer{grid-column:1/-1;text-align:center;color:var(--muted);margin-top:18px;font-size:0.9rem}
+
+        /* modal */
+        .modal{
+            position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:linear-gradient(180deg, rgba(0,0,0,0.45), rgba(0,0,0,0.6));
+            z-index:60;padding:28px;
+        }
+        .modal.open{display:flex}
+        .modal-card{width:min(960px,98%);background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.04)}
+        .close{background:transparent;border:0;color:var(--muted);font-size:1rem;cursor:pointer}
+
+        @media (max-width:980px){
+            .container{grid-template-columns:1fr; padding:18px}
+            aside{order:2}
+            main{order:1}
+            .grid{grid-template-columns:repeat(1,1fr)}
+        }
+    </style>
+</head>
+<body>
+    <div class="container" role="main">
+        <header>
+            <div class="brand">
+                <div class="logo">GH</div>
+                <div>
+                    <h1>GitHub Copilot's Portfolio</h1>
+                    <p class="lead">Frontend & full-stack experiments · UI components · tiny libs</p>
+                </div>
+            </div>
+            <div style="display:flex;gap:10px;align-items:center">
+                <button id="themeToggle" class="btn" aria-pressed="false">Toggle Theme</button>
+                <a href="#contact" class="btn">Contact</a>
+            </div>
+        </header>
+
+        <main>
+            <section class="hero">
+                <div class="avatar">GC</div>
+                <div>
+                    <h2>Build fast. Ship polished. Learn always.</h2>
+                    <p class="lead">I craft interfaces, tiny tools, and shine with clean code. Scroll for projects and demos.</p>
+                    <div class="tags" aria-hidden="true">
+                        <span class="tag">JavaScript</span>
+                        <span class="tag">TypeScript</span>
+                        <span class="tag">React</span>
+                        <span class="tag">Node</span>
+                        <span class="tag">CSS</span>
+                        <span class="tag">Design Systems</span>
+                    </div>
+                </div>
+            </section>
+
+            <section style="margin-top:18px">
+                <div class="controls">
+                    <div class="search" role="search">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="opacity:.7"><path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="11" cy="11" r="6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <input id="q" placeholder="Search projects or tech..." />
+                    </div>
+                    <div class="filters" role="toolbar" aria-label="Filters">
+                        <button class="btn" data-filter="all">All</button>
+                        <button class="btn" data-filter="frontend">Frontend</button>
+                        <button class="btn" data-filter="tools">Tools</button>
+                    </div>
+                </div>
+
+                <div id="grid" class="grid" aria-live="polite"></div>
+            </section>
+        </main>
+
+        <aside>
+            <div class="panel">
+                <h3 style="margin:0 0 8px 0">Quick Info</h3>
+                <p style="margin:0;color:var(--muted)">Focused on readable code, small bundles, fast UX. Open to collaborations, freelance, and short-term gigs.</p>
+            </div>
+
+            <div class="panel">
+                <h4 style="margin:0 0 8px 0">Social</h4>
+                <div class="socials">
+                    <a class="social" href="#" target="_blank" rel="noreferrer">GitHub</a>
+                    <a class="social" href="#" target="_blank" rel="noreferrer">Twitter</a>
+                    <a class="social" href="#" target="_blank" rel="noreferrer">LinkedIn</a>
+                </div>
+            </div>
+
+            <div id="contact" class="panel" aria-labelledby="contact-title">
+                <h4 id="contact-title" style="margin:0 0 8px 0">Contact</h4>
+                <form id="contactForm" style="display:flex;flex-direction:column;gap:8px">
+                    <input name="name" placeholder="Your name" style="padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit" required>
+                    <input name="email" placeholder="Email" style="padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit" required>
+                    <textarea name="msg" placeholder="Message" rows="4" style="padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit" required></textarea>
+                    <button type="submit" class="btn">Send</button>
+                </form>
+            </div>
+        </aside>
+
+        <footer>Made with ❤ — Small projects, big ideas.</footer>
+    </div>
+
+    <div id="modal" class="modal" role="dialog" aria-modal="true" aria-hidden="true">
+        <div class="modal-card" role="document">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+                <h3 id="modalTitle" style="margin:0"></h3>
+                <button id="closeModal" class="close" aria-label="Close">✕</button>
+            </div>
+            <p id="modalDesc" style="color:var(--muted)"></p>
+            <div id="modalStack" class="stack" style="margin:12px 0"></div>
+            <div id="modalLinks" style="display:flex;gap:8px;margin-top:8px"></div>
+            <pre id="modalPreview" style="background:rgba(0,0,0,0.18);padding:12px;border-radius:8px;color:#cfefff;overflow:auto;margin-top:12px"></pre>
+        </div>
+    </div>
+
+    <script>
+        // Sample projects
+        const projects = [
+            { id:1, title:'Pixel Playground', desc:'A tiny canvas-based pixel editor with export & layers.', tags:['frontend','canvas','js'], tech:['JS','Canvas','Vite'], repo:'#', demo:'#', preview:'// small demo snippet\\nconst c=document.createElement(\"canvas\")' },
+            { id:2, title:'TinyState', desc:'0-dependency state manager with hooks-friendly API.', tags:['tools','lib'], tech:['TS','Bundle'], repo:'#', demo:'#', preview:'export function createState(init){...}' },
+            { id:3, title:'UI Sprinkles', desc:'A micro design system: tokens, utilities, and accessible components.', tags:['frontend','design'], tech:['CSS','JS'], repo:'#', demo:'#', preview:'/* tokens */:root{--space:8px}' },
+            { id:4, title:'QueryFast', desc:'Lightweight caching layer for fetch with revalidation.', tags:['tools'], tech:['JS','fetch'], repo:'#', demo:'#', preview:'async function q(url){const res=await fetch(url);return res.json()}' },
+        ];
+
+        const grid = document.getElementById('grid');
+        const q = document.getElementById('q');
+        const filters = document.querySelectorAll('[data-filter]');
+        const modal = document.getElementById('modal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalDesc = document.getElementById('modalDesc');
+        const modalStack = document.getElementById('modalStack');
+        const modalPreview = document.getElementById('modalPreview');
+        const modalLinks = document.getElementById('modalLinks');
+        const closeModal = document.getElementById('closeModal');
+        const themeToggle = document.getElementById('themeToggle');
+
+        function render(list){
+            grid.innerHTML = '';
+            if(!list.length){ grid.innerHTML = '<p style="color:var(--muted)">No projects found.</p>'; return}
+            list.forEach(p=>{
+                const el = document.createElement('button');
+                el.className = 'card';
+                el.setAttribute('aria-describedby','project-'+p.id);
+                el.innerHTML = `
+                    <div style="display:flex;justify-content:space-between;align-items:center">
+                        <h3>${p.title}</h3>
+                        <div class="meta">${p.tags[0]} · ${p.tech[0]}</div>
+                    </div>
+                    <p id="project-${p.id}" style="margin:0;color:var(--muted);font-size:0.92rem">${p.desc}</p>
+                    <div class="stack">${p.tech.map(t=>'<span>'+t+'</span>').join('')}</div>
+                `;
+                el.addEventListener('click',()=>openModal(p));
+                grid.appendChild(el);
+            });
+        }
+
+        function openModal(p){
+            modalTitle.textContent = p.title;
+            modalDesc.textContent = p.desc;
+            modalStack.innerHTML = p.tech.map(t=>'<span class="tag">'+t+'</span>').join('');
+            modalPreview.textContent = p.preview || '';
+            modalLinks.innerHTML = `<a class="btn" href="${p.demo}" target="_blank" rel="noreferrer">Live</a><a class="btn" href="${p.repo}" target="_blank" rel="noreferrer">Repo</a>`;
+            modal.classList.add('open'); modal.setAttribute('aria-hidden','false');
+            document.body.style.overflow = 'hidden';
+        }
+        function close(){ modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); document.body.style.overflow = ''; }
+
+        closeModal.addEventListener('click', close);
+        modal.addEventListener('click', (e)=>{ if(e.target===modal) close(); });
+        window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') close(); });
+
+        // simple search & filter
+        function searchAndFilter(){
+            const term = q.value.toLowerCase().trim();
+            const active = document.querySelector('[data-filter].active')?.dataset.filter || 'all';
+            let out = projects.filter(p=>{
+                if(active!=='all' && !p.tags.includes(active)) return false;
+                if(!term) return true;
+                return (p.title+p.desc+p.tech.join(' ') ).toLowerCase().includes(term);
+            });
+            render(out);
+        }
+
+        // init
+        render(projects);
+
+        q.addEventListener('input', searchAndFilter);
+        filters.forEach(btn=>{
+            btn.addEventListener('click', ()=>{
+                filters.forEach(b=>b.classList.remove('active'));
+                btn.classList.add('active');
+                btn.focus();
+                searchAndFilter();
+            });
+        });
+
+        // contact form (client-side, opens mailto)
+        document.getElementById('contactForm').addEventListener('submit', e=>{
+            e.preventDefault();
+            const fd = new FormData(e.target);
+            const mail = `mailto:you@example.com?subject=${encodeURIComponent('Contact from '+fd.get('name'))}&body=${encodeURIComponent(fd.get('msg') + '\\n\\n' + fd.get('email'))}`;
+            window.location.href = mail;
+        });
+
+        // theme toggle (light/dark)
+        let light = false;
+        themeToggle.addEventListener('click', ()=>{
+            light = !light;
+            document.documentElement.style.setProperty('--bg', light ? '#f7fafc' : '#071021');
+            document.documentElement.style.setProperty('--card', light ? 'rgba(2,6,23,0.04)' : 'rgba(255,255,255,0.06)');
+            document.documentElement.style.setProperty('--muted', light ? '#274154' : '#9fb0c8');
+            themeToggle.setAttribute('aria-pressed', String(light));
+        });
+
+        // accessibility: focus first project when loaded
+        window.addEventListener('load', ()=>{ const first = grid.querySelector('.card'); if(first) first.setAttribute('tabindex',0); });
+    </script>
+</body>
+</html>
