@@ -86,7 +86,7 @@
       /* Styles the footer section */
       height: 20%;
       min-height: 80px;
-      background-color: rgb(45, 119, 193);
+      background-color: rgb(140, 96, 63);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -105,7 +105,7 @@
       border-radius: 50%;
       bottom: 20px;
       right: 20px;
-      background-color: rgb(11, 34, 89);
+      background-color: rgb(69, 69, 69);
       display: flex;
       align-items: center;
       justify-content: center;
