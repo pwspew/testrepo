@@ -2,11 +2,11 @@
       /* Sets the page background and layout */
       @font-face {
         font-family: Elevatia;
-        src: url(fonts/Elevatia-nA2AP.ttf);
+        src: url(fonts/Elevatia-nA2AP.woff2);
       }
       font-family: 'Elevatia', sans-serif;
-      background-color: rgb(0, 0, 0);
-      background-image: url(https://github.com/pwspew/testrepo/blob/main/images/ringedcity.jpg?raw=true);
+      background-color: rgb(72, 140, 169);
+      
       background-size: auto;
       margin: 0;
       padding: 10px 0;
